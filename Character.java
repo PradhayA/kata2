@@ -14,6 +14,8 @@ public class Character {
 
 	private Set<Character> allies = new HashSet<>();
     private int health = 1000;
+
+	private int mana = 20;
     private int level = 1;
     private boolean alive = true;
 	private Set<Faction> factions = new HashSet<>();
@@ -41,6 +43,7 @@ public class Character {
 			this.allies.add(ally); // Add ally to current ally list
 			ally.allies.add(this); // Allies have character added to them
 		}
+		incrementMana();
 	}
 
 	public void leaveFaction(Faction faction){
@@ -53,13 +56,25 @@ public class Character {
 			this.allies.remove(ally); // Remove ally from current ally list
 			ally.allies.remove(this); // Allies have character removed from them
 		}
+		incrementMana();
+	}
+
+	public void incrementMana(){
+		if (mana < 20){
+			mana++;
+		}
 	}
 
 	public void heal(Character character){
 		int healRate = 100;
-		if (character == this || (allies.contains(character) && character.isAlive())){
+		if (mana >= 10 && (character == this || (allies.contains(character) && character.isAlive()))){
 			character.health = Math.min(character.getHealth() + healRate, 1000);
+			mana -= 10;
 		}
+	}
+
+	public int getMana(){
+		return mana;
 	}
 
 	public static void main(String[] args){

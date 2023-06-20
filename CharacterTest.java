@@ -45,4 +45,16 @@ public class CharacterTest {
         c1.heal(c2);
         assertEquals(600, c2.getHealth());
     }
+
+    @Test
+    public void manaTest(){
+        Character c1 = new Character();
+        Character c2 = new Character();
+        Faction faction = new Faction("Candor");
+        c1.joinFaction(faction);
+        c2.joinFaction(faction);
+        c2.setHealthTemp(500);
+        c1.heal(c2);
+        assertEquals(10, c1.getMana());
+    }
 }
